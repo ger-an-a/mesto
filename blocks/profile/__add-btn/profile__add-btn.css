@@ -7,10 +7,15 @@
   box-sizing: content-box;
   border-radius: 2px;
   background: #000;
+  background-image: url(../../../images/btn-add.svg);
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 @media (max-width: 700px) {
   .profile__add-btn {
+    background-size: 16px 16px;
     margin-top: 36px;
     width: 100%;
   }

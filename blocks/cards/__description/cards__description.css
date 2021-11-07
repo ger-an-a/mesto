@@ -1,8 +1,0 @@
-.cards__description {
-  margin: 25px auto 0;
-  width: 246px;
-  min-height: 23px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
