@@ -25,57 +25,14 @@
         <button class="button profile__add-btn" type="button" aria-label="Добавить."></button>
       </section>
       <section class="cards">
-        <ul class="cards__grid">
-          <li class="card">
-            <img src="./images/Karachaevsk.jpg" alt="Сентинский храм." class="card__img">
-            <div class="card__description">
-              <h2 class="card__title">Карачаевск</h2>
-              <button class="button card__like-btn" type="button" aria-label="Нравится."></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="./images/Elbrus.jpg" alt="Горы на горизонте." class="card__img">
-            <div class="card__description">
-              <h2 class="card__title">Гора Эльбрус</h2>
-              <button class="button card__like-btn" type="button" aria-label="Нравится."></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="./images/Dombay.jpg" alt="Пик инэ домбай." class="card__img">
-            <div class="card__description">
-              <h2 class="card__title">Домбай</h2>
-              <button class="button card__like-btn" type="button" aria-label="Нравится."></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="./images/Elbrus.jpg" alt="Горы на горизонте." class="card__img">
-            <div class="card__description">
-              <h2 class="card__title">Гора Эльбрус</h2>
-              <button class="button card__like-btn" type="button" aria-label="Нравится."></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="./images/Dombay.jpg" alt="Пик инэ домбай." class="card__img">
-            <div class="card__description">
-              <h2 class="card__title">Домбай</h2>
-              <button class="button card__like-btn" type="button" aria-label="Нравится."></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="./images/Karachaevsk.jpg" alt="Сентинский храм." class="card__img">
-            <div class="card__description">
-              <h2 class="card__title">Карачаево-Черкесия</h2>
-              <button class="button card__like-btn" type="button" aria-label="Нравится."></button>
-            </div>
-          </li>
-        </ul>
+        <ul class="cards__grid"></ul>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
-      <div class="popup__container">
+    <div class="popup popup_target_edit">
+      <div class="popup__container popup__container_target_form">
         <button class="button popup__close-btn" type="button" aria-label="Отмена."></button>
         <form class="form" name="edit">
           <h2 class="form__title">Редактировать профиль</h2>
@@ -85,7 +42,37 @@
         </form>
       </div>
     </div>
+    <div class="popup popup_target_add">
+      <div class="popup__container popup__container_target_form">
+        <button class="button popup__close-btn" type="button" aria-label="Отмена."></button>
+        <form class="form" name="add">
+          <h2 class="form__title">Новое место</h2>
+          <input class="form__input" type="text" name="forename" placeholder="Название" required>
+          <input class="form__input" type="text" name="sorce" placeholder="Ссылка на картинку" required>
+          <button class="button form__submit-btn" type="submit">Создать</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_target_img">
+      <div class="popup__container popup__container_target_photo-viewport">
+        <button class="button popup__close-btn" type="button" aria-label="Отмена."></button>
+        <div class="photo-viewport">
+          <img class="photo-viewport__img">
+          <h2 class="photo-viewport__title"></h2>
+        </div>
+      </div>
+    </div>
   </div>
+  <template id="card-template">
+    <li class="card">
+      <button class="button card__delete-btn" type="button" aria-label="Удалить."></button>
+      <img class="card__img">
+      <div class="card__description">
+        <h2 class="card__title"></h2>
+        <button class="button card__like-btn" type="button" aria-label="Нравится."></button>
+      </div>
+    </li>
+  </template>
   <script src="./scripts/script.js"></script>
 </body>
 
