@@ -70,29 +70,36 @@ function addCard(cardName, cardLink, cardAlt = cardName) {
   card.querySelector('.card__img').addEventListener('click', open);
   cardsContainer.prepend(card);
 }
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
 
 function open(evt) {
   switch (evt.target) {
     case editBtn:
-      editPopup.classList.add('popup_opened');
+      openPopup(editPopup);
       inputNameEditPopup.value = nameProfile.textContent;
       inputActivityEditPopup.value = activityProfile.textContent;
       break;
     case addBtn:
-      addPopup.classList.add('popup_opened');
-      inputNameAddPopup.value = '';
-      inputSorceAddPopup.value = '';
+      openPopup(addPopup);
+      //инпуты здесь очищала, потому что не припомню, чтоб где-то после закрытия формы оставались введенные данные=)
       break;
     default:
-      imgPopup.classList.add('popup_opened');
+      openPopup(imgPopup);
       imgPopup.querySelector('.photo-viewport__title').textContent = evt.target.parentNode.querySelector('.card__title').textContent;
       imgPopup.querySelector('.photo-viewport__img').src = evt.target.src;
       imgPopup.querySelector('.photo-viewport__img').alt = evt.target.alt;
   }
 }
 
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
+
 function close() {
-  page.querySelector('.popup_opened').classList.remove('popup_opened');
+  closePopup(page.querySelector('.popup_opened'));
+  //не понимаю, почему в этом случае тоже нужно выносить в отельную функцию удаление класса, это итак универсальная функция закрытия попапа(больше одного же не может быть открыто)
 }
 
 function saveChanges(evt) {
@@ -105,6 +112,8 @@ function saveChanges(evt) {
 function createCard(evt) {
   evt.preventDefault();
   addCard(inputNameAddPopup.value, inputSorceAddPopup.value);
+  inputNameAddPopup.value = '';
+  inputSorceAddPopup.value = '';
   close();
 }
 
