@@ -11,11 +11,11 @@
 @media (max-width: 550px) {
   .profile__info {
     grid-template-areas:
-  "avatar avatar"
-  "name edit"
-  "activity activity";
-  grid-gap: 14px 10px;
-  justify-items: center;
+      "avatar avatar"
+      "name edit"
+      "activity activity";
+      grid-gap: 14px 10px;
+      justify-items: center;
   }
 }
 

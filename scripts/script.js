@@ -1,22 +1,15 @@
 const page = document.querySelector('.page');
+const buttonList = Array.from(page.querySelectorAll('.button'));
 const nameProfile = page.querySelector('.profile__title');
 const activityProfile = page.querySelector('.profile__subtitle');
-const editBtn = page.querySelector('.profile__edit-btn');
-const editPopup = page.querySelector('.popup_target_edit');
-const closeBtnEditPopup = editPopup.querySelector('.popup__close-btn');
-const formEditPopup = editPopup.querySelector('.form');
-const inputNameEditPopup = formEditPopup.querySelector('input[name="forename"]');
-const inputActivityEditPopup = formEditPopup.querySelector('input[name="activity"]');
-const addBtn = page.querySelector('.profile__add-btn');
-const addPopup = page.querySelector('.popup_target_add');
-const closeBtnAddPopup = addPopup.querySelector('.popup__close-btn');
-const formAddPopup = addPopup.querySelector('.form');
-const inputNameAddPopup = formAddPopup.querySelector('input[name="forename"]');
-const inputSorceAddPopup = formAddPopup.querySelector('input[name="sorce"]');
 const cardTemplate = document.querySelector('#card-template').content;
 const cardsContainer = page.querySelector('.cards__grid');
-const imgPopup = page.querySelector('.popup_target_img');
-const closeBtnImgPopup = imgPopup.querySelector('.popup__close-btn');
+const formEdit = document.forms.edit;
+const inputName = formEdit.elements.forename;
+const inputActivity = formEdit.elements.activity;
+const formAdd = document.forms.add;
+const inputTitle = formAdd.elements.title;
+const inputSorce = formAdd.elements.sorce;
 
 function initialAddCards() {
   const initialCards = [
@@ -61,31 +54,31 @@ function addCard(cardName, cardLink, cardAlt = cardName) {
   card.querySelector('.card__title').textContent = cardName;
   card.querySelector('.card__img').src = cardLink;
   card.querySelector('.card__img').alt = cardAlt;
-  card.querySelector('.card__like-btn').addEventListener('click', (evt) => {
-    evt.target.classList.toggle('card__like-btn_active');
-  });
-  card.querySelector('.card__delete-btn').addEventListener('click', (evt) => {
-    evt.target.parentNode.remove();
-  });
-  card.querySelector('.card__img').addEventListener('click', open);
   cardsContainer.prepend(card);
 }
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
 
-function open(evt) {
-  switch (evt.target) {
-    case editBtn:
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
+
+function selectToOpen(evt) {
+  const editPopup = page.querySelector('.popup_target_edit');
+  const addPopup = page.querySelector('.popup_target_add');
+  const imgPopup = page.querySelector('.popup_target_img');
+  switch (evt.target.id) {
+    case 'edit':
       openPopup(editPopup);
-      inputNameEditPopup.value = nameProfile.textContent;
-      inputActivityEditPopup.value = activityProfile.textContent;
+      inputName.value = nameProfile.textContent;
+      inputActivity.value = activityProfile.textContent;
       break;
-    case addBtn:
+    case 'add':
       openPopup(addPopup);
-      //инпуты здесь очищала, потому что не припомню, чтоб где-то после закрытия формы оставались введенные данные=)
       break;
-    default:
+    case 'img':
       openPopup(imgPopup);
       imgPopup.querySelector('.photo-viewport__title').textContent = evt.target.parentNode.querySelector('.card__title').textContent;
       imgPopup.querySelector('.photo-viewport__img').src = evt.target.src;
@@ -93,35 +86,51 @@ function open(evt) {
   }
 }
 
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-}
-
-function close() {
+function selectToClose() {
   closePopup(page.querySelector('.popup_opened'));
-  //не понимаю, почему в этом случае тоже нужно выносить в отельную функцию удаление класса, это итак универсальная функция закрытия попапа(больше одного же не может быть открыто)
 }
 
 function saveChanges(evt) {
   evt.preventDefault();
-  nameProfile.textContent = inputNameEditPopup.value;
-  activityProfile.textContent = inputActivityEditPopup.value;
-  close();
+  nameProfile.textContent = inputName.value;
+  activityProfile.textContent = inputActivity.value;
+  selectToClose();
 }
 
 function createCard(evt) {
   evt.preventDefault();
-  addCard(inputNameAddPopup.value, inputSorceAddPopup.value);
-  inputNameAddPopup.value = '';
-  inputSorceAddPopup.value = '';
-  close();
+  addCard(inputTitle.value, inputSorce.value);
+  inputTitle.value = '';
+  inputSorce.value = '';
+  selectToClose();
+}
+
+function enableClickEvent(evt) {
+  if (evt.target.classList.contains('card__like-btn')) {
+    evt.target.classList.toggle('card__like-btn_active');
+  }
+  if (evt.target.classList.contains('card__delete-btn')) {
+    evt.target.parentNode.remove();
+  }
+  if (evt.target.classList.contains('button_target_open')) {
+    selectToOpen(evt);
+  }
+  if (evt.target.classList.contains('button_target_close') || evt.target.classList.contains('popup') && !evt.target.classList.contains('popup__container')) {
+    selectToClose();
+  }
+}
+
+function enableKeydownEvent(evt) {
+  if (evt.key === 'Escape') {
+    selectToClose();
+  }
 }
 
 initialAddCards();
-editBtn.addEventListener('click', open);
-addBtn.addEventListener('click', open);
-closeBtnEditPopup.addEventListener('click', close);
-closeBtnAddPopup.addEventListener('click', close);
-closeBtnImgPopup.addEventListener('click', close);
-formEditPopup.addEventListener('submit', saveChanges);
-formAddPopup.addEventListener('submit', createCard);
+page.addEventListener('click', enableClickEvent);
+document.addEventListener('keydown', enableKeydownEvent);
+formEdit.addEventListener('submit', saveChanges);
+formAdd.addEventListener('submit', createCard);
+
+
+

@@ -8,11 +8,20 @@
   text-align: left;
   margin: 0;
   grid-area: name;
+  max-width: 400px;
+  word-wrap: break-word;
+}
+
+@media (max-width: 880px) {
+  .profile__title {
+    max-width: 300px;
+  }
 }
 
 @media (max-width: 550px) {
   .profile__title {
     font-size: 27px;
     line-height: 1.21;
+    max-width: 200px;
   }
 }
