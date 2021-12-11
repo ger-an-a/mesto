@@ -40,12 +40,12 @@ function setEventListeners(formElement, obj) {
   const inputList = Array.from(formElement.querySelectorAll(obj.inputSelector));
   const buttonElement = formElement.querySelector(obj.submitButtonSelector);
   toggleButtonState(inputList, buttonElement, obj);
+  buttonElement.addEventListener('click', startValidation);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       isValid(formElement, inputElement, obj)
       toggleButtonState(inputList, buttonElement, obj);
     });
-
   });
 };
 
@@ -56,11 +56,16 @@ function enableValidation(obj) {
   });
 };
 
-enableValidation({
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__submit-btn',
-  inactiveButtonClass: 'form__submit_inactive',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__input-error'
-});
+function startValidation() {
+  enableValidation({
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    submitButtonSelector: '.form__submit-btn',
+    inactiveButtonClass: 'form__submit_inactive',
+    inputErrorClass: 'form__input_type_error',
+    errorClass: 'form__input-error'
+  });
+}
+
+
+
