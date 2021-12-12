@@ -50,9 +50,6 @@ function initialAddCards() {
   ];
   initialCards.forEach((item) => {
     const card = newCard(item.name, item.link, item.alt);
-    card.querySelector('.card__img').addEventListener('click', openImgPopup);
-    card.querySelector('.card__like-btn').addEventListener('click', toggleLike);
-    card.querySelector('.card__delete-btn').addEventListener('click', deleteParent);
     addCard(card);
   });
 }
@@ -62,6 +59,9 @@ function newCard(cardName, cardLink, cardAlt = cardName) {
   card.querySelector('.card__title').textContent = cardName;
   card.querySelector('.card__img').src = cardLink;
   card.querySelector('.card__img').alt = cardAlt;
+  card.querySelector('.card__img').addEventListener('click', openImgPopup);
+  card.querySelector('.card__like-btn').addEventListener('click', toggleLike);
+  card.querySelector('.card__delete-btn').addEventListener('click', deleteParent);
   return card;
 }
 
@@ -72,8 +72,7 @@ function addCard(card) {
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
-  page.addEventListener('click', overlayClose);
-  startValidation();
+  popup.addEventListener('click', overlayClose);
 }
 
 function closePopup(popup) {
@@ -103,7 +102,12 @@ function saveChanges(evt) {
   evt.preventDefault();
   nameProfile.textContent = inputName.value;
   activityProfile.textContent = inputActivity.value;
-  closePopup(page.querySelector('.popup_opened'));
+  closePopup(editPopup);
+}
+
+function disabledBtn(Btn) {
+  Btn.classList.add('form__submit_inactive');
+  Btn.setAttribute('disabled', true);
 }
 
 function createCard(evt) {
@@ -115,7 +119,8 @@ function createCard(evt) {
   addCard(card);
   inputTitle.value = '';
   inputSorce.value = '';
-  closePopup(page.querySelector('.popup_opened'));
+  disabledBtn(addPopup.querySelector('.form__submit-btn'));
+  closePopup(addPopup);
 }
 
 function toggleLike(evt) {
@@ -143,6 +148,5 @@ editBtn.addEventListener('click', openEditPopup);
 addBtn.addEventListener('click', openAddPopup);
 formEdit.addEventListener('submit', saveChanges);
 formAdd.addEventListener('submit', createCard);
-
 
 

@@ -67,5 +67,5 @@ function startValidation() {
   });
 }
 
-
+startValidation();
 
