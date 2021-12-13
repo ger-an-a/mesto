@@ -61,7 +61,7 @@ function newCard(cardName, cardLink, cardAlt = cardName) {
   card.querySelector('.card__img').alt = cardAlt;
   card.querySelector('.card__img').addEventListener('click', openImgPopup);
   card.querySelector('.card__like-btn').addEventListener('click', toggleLike);
-  card.querySelector('.card__delete-btn').addEventListener('click', deleteParent);
+  card.querySelector('.card__delete-btn').addEventListener('click', deleteCard);
   return card;
 }
 
@@ -78,7 +78,7 @@ function openPopup(popup) {
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscape);
-  page.removeEventListener('click', overlayClose);
+  popup.removeEventListener('click', overlayClose);
 }
 
 function openEditPopup() {
@@ -115,7 +115,7 @@ function createCard(evt) {
   const card = newCard(inputTitle.value, inputSorce.value);
   card.querySelector('.card__img').addEventListener('click', openImgPopup);
   card.querySelector('.card__like-btn').addEventListener('click', toggleLike);
-  card.querySelector('.card__delete-btn').addEventListener('click', deleteParent);
+  card.querySelector('.card__delete-btn').addEventListener('click', deleteCard);
   addCard(card);
   inputTitle.value = '';
   inputSorce.value = '';
@@ -127,8 +127,8 @@ function toggleLike(evt) {
   evt.target.classList.toggle('card__like-btn_active');
 }
 
-function deleteParent(evt) {
-  evt.target.parentNode.remove();
+function deleteCard(evt) {
+  evt.target.closest('.card').remove();
 }
 
 function overlayClose(evt) {
