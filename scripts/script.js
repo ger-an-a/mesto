@@ -1,7 +1,7 @@
-import { Card, addCard } from './Card.js';
+import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
-import { validationSettings as settings } from './ValidationSettings.js'
-import { openPopup, closePopup } from './DisplayPopup.js';
+import { validationSettings as settings } from './validationSettings.js'
+import { openPopup, closePopup } from './displayPopup.js';
 const page = document.querySelector('.page');
 const nameProfile = page.querySelector('.profile__title');
 const activityProfile = page.querySelector('.profile__subtitle');
@@ -15,25 +15,25 @@ const editPopup = page.querySelector('.popup_target_edit');
 const addPopup = page.querySelector('.popup_target_add');
 const editBtn = page.querySelector('.profile__edit-btn');
 const addBtn = page.querySelector('.profile__add-btn');
+export const cardsContainer = document.querySelector('.cards__grid');
+const formEditValidation = new FormValidator(settings, formEdit);
+const formAddValidation = new FormValidator(settings, formAdd);
 
-function disabledBtn(Btn) {
-  Btn.classList.add('form__submit_inactive');
-  Btn.setAttribute('disabled', true);
+export function createCard(item) {
+  const card = new Card(item, '#card-template');
+  const cardElement = card.generateCard()
+  return cardElement
 }
 
 function openEditPopup() {
   openPopup(editPopup);
   inputName.value = nameProfile.textContent;
   inputActivity.value = activityProfile.textContent;
-  const formEditValidation = new FormValidator(settings, formEdit);
-  formEditValidation.enableValidation();
   formEditValidation.hideErrors();
 }
 
 function openAddPopup() {
   openPopup(addPopup);
-  const formAddValidation = new FormValidator(settings, formAdd);
-  formAddValidation.enableValidation();
   if ((inputTitle.value == '') && (inputSorce.value == '')) {
     formAddValidation.hideErrors();
   }
@@ -46,22 +46,24 @@ function saveChanges(evt) {
   closePopup(editPopup);
 }
 
-function createCard(evt) {
+function newCard(evt) {
   evt.preventDefault();
   const inputData = {
     title: inputTitle.value,
     link: inputSorce.value,
     alt: inputSorce.value
   };
-  const card = new Card(inputData, '#card-template');
-  addCard(card.generateCard());
+  cardsContainer.prepend(createCard(inputData));
   inputTitle.value = '';
   inputSorce.value = '';
-  disabledBtn(addPopup.querySelector('.form__submit-btn'));
+  formAddValidation.hideErrors();
   closePopup(addPopup);
 }
 
+
+formEditValidation.enableValidation();
+formAddValidation.enableValidation();
 editBtn.addEventListener('click', openEditPopup);
 addBtn.addEventListener('click', openAddPopup);
 formEdit.addEventListener('submit', saveChanges);
-formAdd.addEventListener('submit', createCard);
+formAdd.addEventListener('submit', newCard);

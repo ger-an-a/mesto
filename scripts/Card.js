@@ -1,10 +1,13 @@
-import { openPopup } from "./DisplayPopup.js";
+import { openPopup } from "./displayPopup.js";
 export class Card {
   constructor(data, cardSelector) {
     this._title = data.title;
     this._link = data.link;
     this._alt = data.alt;
     this._cardSelector = cardSelector;
+    this._imgPopup = document.querySelector('.popup_target_img');
+    this._viewportTitle = this._imgPopup.querySelector('.photo-viewport__title');
+    this._viewportImg = this._imgPopup.querySelector('.photo-viewport__img');
   }
 
   _getTemplate() {
@@ -13,11 +16,10 @@ export class Card {
   }
 
   _openImgPopup() {
-    const imgPopup = document.querySelector('.popup_target_img');
-    openPopup(imgPopup);
-    imgPopup.querySelector('.photo-viewport__title').textContent = this._title;
-    imgPopup.querySelector('.photo-viewport__img').src = this._link;
-    imgPopup.querySelector('.photo-viewport__img').alt = this._alt;
+    openPopup(this._imgPopup);
+    this._viewportTitle.textContent = this._title;
+    this._viewportImg.src = this._link;
+    this._viewportImg.alt = this._alt;
   }
 
   _toggleLike() {
@@ -48,10 +50,4 @@ export class Card {
     this._setEventListeners();
     return this._element;
   }
-}
-
-const cardsContainer = document.querySelector('.cards__grid');
-
-export function addCard(card) {
-  cardsContainer.prepend(card);
 }

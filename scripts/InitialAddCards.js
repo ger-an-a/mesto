@@ -1,4 +1,4 @@
-import { Card, addCard } from './Card.js'
+import { cardsContainer, createCard } from './script.js'
 function initialAddCards() {
   const initialCards = [
     {
@@ -33,8 +33,7 @@ function initialAddCards() {
     }
   ];
   initialCards.forEach((item) => {
-    const card = new Card(item, '#card-template');
-    addCard(card.generateCard());
+    cardsContainer.prepend(createCard(item));
   });
 }
 
