@@ -4,19 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 
 <body class="background">
   <div class="page">
     <header class="header">
-      <img src="./images/logo.svg" alt="Логотип Mesto Russia." class="header__logo">
+      <img src="<%=require('./images/logo.svg')%>" alt="Логотип Mesto Russia." class="header__logo">
     </header>
     <main class="content">
       <section class="profile">
         <div class="profile__info">
-          <img class="profile__avatar" src="./images/avatar.jpg"
+          <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>"
             alt="Улыбающийся пожилой мужчина в красной шапке и очках.">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <p class="profile__subtitle">Исследователь океана</p>
@@ -37,7 +36,7 @@
         <button class="button button_target_close popup__close-btn" type="button" aria-label="Отмена."></button>
         <form class="form" name="edit" novalidate>
           <h2 class="form__title">Редактировать профиль</h2>
-          <input class="form__input" id="name-input" type="text" minlength="2" maxlength="40" name="forename"
+          <input class="form__input" id="name-input" type="text" minlength="2" maxlength="40" name="userName"
             placeholder="Имя пользователя" required>
           <span class="form__input-error name-input-error"></span>
           <input class="form__input" id="activity-input" type="text" minlength="2" maxlength="200" name="activity"
@@ -81,8 +80,6 @@
       </div>
     </li>
   </template>
-  <script type="module" src="./scripts/script.js"></script>
-  <script type="module" src="./scripts/InitialAddCards.js"></script>
 </body>
 
 </html>

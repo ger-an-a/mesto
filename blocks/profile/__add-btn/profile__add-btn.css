@@ -7,7 +7,7 @@
   box-sizing: content-box;
   border-radius: 2px;
   background: #000;
-  background-image: url(../../../images/btn-add.svg);
+  background-image: url(../../../src/images/btn-add.svg);
   background-size: 22px 22px;
   background-repeat: no-repeat;
   background-position: center;

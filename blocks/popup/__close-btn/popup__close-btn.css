@@ -8,7 +8,7 @@
   right: -40px;
   top: -40px;
   background: none;
-  background-image: url(../../../images/btn-close.svg);
+  background-image: url(../../../src/images/btn-close.svg);
   background-size: cover;
   background-repeat: no-repeat;
 }
