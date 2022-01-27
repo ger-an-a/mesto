@@ -1,3 +1,10 @@
+/* 
+В теме "Настраиваем обработку HTML" сказано, что файл index.js необходимо переместить в src.
+В чеклисте также сказано, что HTML, CSS, JS-файлы и изображения должны быть в папке src.
+Но еще в чеклисте сказано, что должна быть директория pages с файлами index.css и index.js.
+В итоге должно быть 2 копии этих файлов в разных директориях? Или в чеклисте лишний пункт с прошлых работ?
+Не совсем понятно, какая итоговая структура тогда должна быть
+*/
 import './index.css';
 import { initialAddCards } from '../utils/initialAddCards.js';
 import { formEdit, formAdd, editBtn, addBtn, popupSelectors, profileSelectors } from '../utils/constants.js';
