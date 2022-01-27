@@ -1,11 +1,12 @@
-import { popupClasses } from "../utils/constants.js";
 export class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._handleEscClose = this._handleEscClose.bind(this);
+    this._handleOverlayClose = this._handleOverlayClose.bind(this);
   }
 
-  _overlayClose(evt) {
-    if (evt.target.classList.contains(popupClasses.btnClose) || evt.target.classList.contains(popupClasses.popup) && !evt.target.classList.contains(popupClasses.container)) {
+  _handleOverlayClose(evt) {
+    if (evt.target.classList.contains('button_target_close') || evt.target.classList.contains('popup') && !evt.target.classList.contains('popup__container')) {
       this.close();
     }
   }
@@ -17,22 +18,22 @@ export class Popup {
   }
 
   setEventListeners() {
-    document.addEventListener('keydown', this._handleEscClose.bind(this));
-    this._popup.addEventListener('click', this._overlayClose.bind(this));
+    document.addEventListener('keydown', this._handleEscClose);
+    this._popup.addEventListener('click', this._handleOverlayClose);
   }
 
   delEventListeners() {
-    document.removeEventListener('keydown', this._handleEscClose.bind(this));
-    this._popup.removeEventListener('click', this._overlayClose.bind(this));
+    document.removeEventListener('keydown', this._handleEscClose);
+    this._popup.removeEventListener('click', this._handleOverlayClose);
   }
 
   open() {
-    this._popup.classList.add(popupClasses.opened);
+    this._popup.classList.add('popup_opened');
     this.setEventListeners();
   }
 
   close() {
-    this._popup.classList.remove(popupClasses.opened);
+    this._popup.classList.remove('popup_opened');
     this.delEventListeners();
   }
 }

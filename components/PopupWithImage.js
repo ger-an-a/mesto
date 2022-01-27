@@ -1,20 +1,16 @@
 import { Popup } from "./Popup.js";
-import { popupSelectors, viewportSelectors } from "../utils/constants.js";
 export class PopupWithImage extends Popup {
-  constructor(popupSelector, { title, link, alt }) {
+  constructor(popupSelector) {
     super(popupSelector);
-    this._title = title;
-    this._link = link;
-    this._alt = alt;
-    this._imgPopup = document.querySelector(popupSelectors.img);
-    this._viewportTitle = this._imgPopup.querySelector(viewportSelectors.title);
-    this._viewportImg = this._imgPopup.querySelector(viewportSelectors.img);
+    this._imgPopup = document.querySelector('.popup_target_img');
+    this._viewportTitle = this._imgPopup.querySelector('.photo-viewport__title');
+    this._viewportImg = this._imgPopup.querySelector('.photo-viewport__img');
   }
 
-  open() {
+  open({ title, link, alt }) {
     super.open();
-    this._viewportTitle.textContent = this._title;
-    this._viewportImg.src = this._link;
-    this._viewportImg.alt = this._alt;
+    this._viewportTitle.textContent = title;
+    this._viewportImg.src = link;
+    this._viewportImg.alt = alt;
   }
 }
