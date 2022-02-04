@@ -40,5 +40,5 @@
 .photo-viewport__img{max-height:75vh;max-width:75vw;-o-object-fit:cover;object-fit:cover}
 .photo-viewport__title{color:#fff;font-size:12px;font-style:normal;font-weight:400;letter-spacing:0;line-height:15px;margin:10px 0 0;text-align:left}
 .card__like{display:flex;flex-direction:column;height:35px;margin:0;padding:0;width:22px}
-.card__likes{font-size:13px;font-style:normal;font-weight:400;line-height:1.21;margin:3 auto 0;padding:0;text-align:center}
+.card__likes{font-size:13px;font-style:normal;font-weight:400;line-height:1.21;margin:3px auto 0;padding:0;text-align:center}
 
