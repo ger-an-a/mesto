@@ -7,9 +7,9 @@ export class PopupWithImage extends Popup {
     this._viewportImg = this._imgPopup.querySelector('.photo-viewport__img');
   }
 
-  open({ title, link, alt }) {
+  open({ name, link, alt }) {
     super.open();
-    this._viewportTitle.textContent = title;
+    this._viewportTitle.textContent = name;
     this._viewportImg.src = link;
     this._viewportImg.alt = alt;
   }

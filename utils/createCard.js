@@ -1,8 +1,13 @@
 import { Card } from "../components/Card.js";
-export function createCard(cardData, popup) {
+export function createCard(cardData, popupImg, popupDel, myId, api) {
   const card = new Card(cardData, '#card-template', () => {
-    popup.open(cardData);
+    popupDel.open(card);
+  }, () => {
+    popupImg.open(cardData);
+  }, () => {
+    Promise.any([api.getInitialCards(), api.getInitialInfo()])
+    card.handleLike(api);
   });
-  const cardElement = card.generateCard();
+  const cardElement = card.generateCard(myId);
   return cardElement;
 }

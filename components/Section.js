@@ -5,6 +5,10 @@ export class Section {
     this._container = document.querySelector(containerSelector);
   }
 
+  addInitialItem(item) {
+    this._container.append(item);
+  }
+
   addItem(item) {
     this._container.prepend(item);
   }

@@ -17,23 +17,23 @@ export class Popup {
     }
   }
 
-  setEventListeners() {
+  _setEventListeners() {
     document.addEventListener('keydown', this._handleEscClose);
     this._popup.addEventListener('click', this._handleOverlayClose);
   }
 
-  delEventListeners() {
+  _delEventListeners() {
     document.removeEventListener('keydown', this._handleEscClose);
     this._popup.removeEventListener('click', this._handleOverlayClose);
   }
 
   open() {
     this._popup.classList.add('popup_opened');
-    this.setEventListeners();
+    this._setEventListeners();
   }
 
   close() {
     this._popup.classList.remove('popup_opened');
-    this.delEventListeners();
+    this._delEventListeners();
   }
 }
