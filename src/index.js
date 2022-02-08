@@ -37,16 +37,16 @@ Promise.all([api.getInitialCards(), api.getInitialInfo()])
     const cardsList = initialAddCards(cardsData, myId, imgPopup, delPopup, api);
     const avatarPopup = new PopupWithForm(popupSelectors.avatar, (evt) => {
       evt.preventDefault();
-      avatarPopup.loading(true);
       avatarPopup.getInputValues();
+      avatarPopup.loading(true);
       api.patchAvatar(avatarPopup.formValues.sorce)
         .then(data => {
           info.setAvatar(data.avatar);
         })
         .finally(() => {
-          avatarPopup.loading(false);
-          avatarPopup.close();
-          avatarPopup.reset();
+          avatarPopup.loading.bind(avatarPopup)(false);
+          avatarPopup.close.bind(avatarPopup)();
+          avatarPopup.reset.bind(avatarPopup)();
         })
     });
     const editPopup = new PopupWithForm(popupSelectors.edit, (evt) => {
@@ -58,8 +58,8 @@ Promise.all([api.getInitialCards(), api.getInitialInfo()])
           info.setUserInfo(data.name, data.about);
         })
         .finally(() => {
-          editPopup.loading(false);
-          editPopup.close();
+          editPopup.loading.bind(editPopup)(false);
+          editPopup.close.bind(editPopup)();
         })
     });
     const addPopup = new PopupWithForm(popupSelectors.add, (evt) => {
@@ -73,7 +73,7 @@ Promise.all([api.getInitialCards(), api.getInitialInfo()])
           formAddValidation.hideErrors();
         })
         .finally(() => {
-          avatarPopup.loading(false);
+          avatarPopup.loading.bind(addPopup)(false);
           addPopup.close.bind(addPopup)();
           addPopup.reset.bind(addPopup)();
         })

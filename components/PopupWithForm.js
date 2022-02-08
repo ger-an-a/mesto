@@ -3,7 +3,7 @@ export class PopupWithForm extends Popup {
   constructor(popupSelector, callbackSubmit) {
     super(popupSelector);
     this._callbackSubmit = callbackSubmit;
-    this._submitBtn = this._popup.querySelector('.form__submit-btn');
+    this._submitBtn = this._popup.querySelector('.form__submit');
     this._form = this._popup.querySelector('.form');
     this._inputs = this._popup.querySelectorAll('.form__input');
     this.formValues = {};
@@ -19,11 +19,11 @@ export class PopupWithForm extends Popup {
     this._form.removeEventListener('submit', this._callbackSubmit);
   }
 
-  loading(isLoading){
-    if(isLoading){
+  loading(isLoading) {
+    if (isLoading) {
       this._submitBtn.textContent = 'Сохранение...';
     }
-    else this._submitBtn.textContent = 'Сохранить';
+    else this._submitBtn.textContent = this._submitBtn.getAttribute('aria-label');
   }
 
   getInputValues() {
