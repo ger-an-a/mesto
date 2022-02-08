@@ -68,7 +68,7 @@ Promise.all([api.getInitialCards(), api.getInitialInfo()])
       addPopup.getInputValues();
       api.postCard(addPopup.formValues.title, addPopup.formValues.sorce)
         .then(data => {
-          const cardElement = createCard(data, myId, imgPopup, delPopup, api);
+          const cardElement = createCard(data, imgPopup, delPopup, myId, api);
           cardsList.addItem(cardElement);
           formAddValidation.hideErrors();
         })
