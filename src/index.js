@@ -1,10 +1,3 @@
-/* 
-В теме "Настраиваем обработку HTML" сказано, что файл index.js необходимо переместить в src.
-В чеклисте также сказано, что HTML, CSS, JS-файлы и изображения должны быть в папке src.
-Но еще в чеклисте сказано, что должна быть директория pages с файлами index.css и index.js.
-В итоге должно быть 2 копии этих файлов в разных директориях? Или в чеклисте лишний пункт с прошлых работ?
-Не совсем понятно, какая итоговая структура тогда должна быть
-*/
 import './index.css';
 import { initialAddInfo } from '../utils/initialAddInfo.js';
 import { initialAddCards } from '../utils/initialAddCards.js';
@@ -38,58 +31,58 @@ formEditValidation.enableValidation();
 formAddValidation.enableValidation();
 formAvatarValidation.enableValidation();
 Promise.all([api.getInitialCards(), api.getInitialInfo()])
-.then(([cardsData, userData]) => {
-  const myId = userData._id;
-  const info = initialAddInfo(userData, { userNameSelector: profileSelectors.title, activitySelector: profileSelectors.subtitle, avatarSelector: profileSelectors.avatar });
-  const cardsList = initialAddCards(cardsData, myId, imgPopup, delPopup, api);
-  const avatarPopup = new PopupWithForm(popupSelectors.avatar, (evt) => {
-    evt.preventDefault();
-    avatarPopup.loading(true);
-    avatarPopup.getInputValues();
-    api.patchAvatar(avatarPopup.formValues.sorce)
-      .then(data => {
-        info.setAvatar(data.avatar);
-      })
-      .finally(()=>{
-        avatarPopup.loading(false);
-        avatarPopup.close();
-        avatarPopup.reset();
-      })
-  });
-  const editPopup = new PopupWithForm(popupSelectors.edit, (evt) => {
-    evt.preventDefault();
-    editPopup.loading(true);
-    editPopup.getInputValues();
-    api.patchInfo(editPopup.formValues.userName, editPopup.formValues.activity)
-    .then(data => {
-      info.setUserInfo(data.name, data.about);
-    })
-    .finally(()=>{
-      editPopup.loading(false);
-      editPopup.close();
-    })
-  });
-  const addPopup = new PopupWithForm(popupSelectors.add, (evt) => {
-    evt.preventDefault();
-    addPopup.loading(true);
-    addPopup.getInputValues();
-    api.postCard(addPopup.formValues.title, addPopup.formValues.sorce)
-      .then(data => {
-        const cardElement = createCard(data, myId, imgPopup, delPopup, api);
-        cardsList.addItem(cardElement);
-        formAddValidation.hideErrors();
-      })
-      .finally(()=>{
-        avatarPopup.loading(false);
-        addPopup.close.bind(addPopup)();
-        addPopup.reset.bind(addPopup)();
-      })
-  });
+  .then(([cardsData, userData]) => {
+    const myId = userData._id;
+    const info = initialAddInfo(userData, { userNameSelector: profileSelectors.title, activitySelector: profileSelectors.subtitle, avatarSelector: profileSelectors.avatar });
+    const cardsList = initialAddCards(cardsData, myId, imgPopup, delPopup, api);
+    const avatarPopup = new PopupWithForm(popupSelectors.avatar, (evt) => {
+      evt.preventDefault();
+      avatarPopup.loading(true);
+      avatarPopup.getInputValues();
+      api.patchAvatar(avatarPopup.formValues.sorce)
+        .then(data => {
+          info.setAvatar(data.avatar);
+        })
+        .finally(() => {
+          avatarPopup.loading(false);
+          avatarPopup.close();
+          avatarPopup.reset();
+        })
+    });
+    const editPopup = new PopupWithForm(popupSelectors.edit, (evt) => {
+      evt.preventDefault();
+      editPopup.loading(true);
+      editPopup.getInputValues();
+      api.patchInfo(editPopup.formValues.userName, editPopup.formValues.activity)
+        .then(data => {
+          info.setUserInfo(data.name, data.about);
+        })
+        .finally(() => {
+          editPopup.loading(false);
+          editPopup.close();
+        })
+    });
+    const addPopup = new PopupWithForm(popupSelectors.add, (evt) => {
+      evt.preventDefault();
+      addPopup.loading(true);
+      addPopup.getInputValues();
+      api.postCard(addPopup.formValues.title, addPopup.formValues.sorce)
+        .then(data => {
+          const cardElement = createCard(data, myId, imgPopup, delPopup, api);
+          cardsList.addItem(cardElement);
+          formAddValidation.hideErrors();
+        })
+        .finally(() => {
+          avatarPopup.loading(false);
+          addPopup.close.bind(addPopup)();
+          addPopup.reset.bind(addPopup)();
+        })
+    });
 
-  avatarBtn.addEventListener('click', avatarPopup.open.bind(avatarPopup));
-  editBtn.addEventListener('click', () => {
-    editPopup.setInputValues(info.getUserInfo());
-    editPopup.open.bind(editPopup)();
+    avatarBtn.addEventListener('click', avatarPopup.open.bind(avatarPopup));
+    editBtn.addEventListener('click', () => {
+      editPopup.setInputValues(info.getUserInfo());
+      editPopup.open.bind(editPopup)();
+    });
+    addBtn.addEventListener('click', addPopup.open.bind(addPopup));
   });
-  addBtn.addEventListener('click', addPopup.open.bind(addPopup));
-});
