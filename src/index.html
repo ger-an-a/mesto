@@ -16,7 +16,7 @@
       <section class="profile">
         <div class="profile__info">
           <button class="profile__avatar-btn" type="button" aria-label=""></button>
-          <img class="profile__avatar" src="" alt="Фото профиля.">
+          <img class="profile__avatar" src="<%=require('./images/logo.svg')%>" alt="Фото профиля.">
           <h1 class="profile__title"></h1>
           <p class="profile__subtitle"></p>
           <button class="button profile__edit-btn" type="button" aria-label="Редактировать."></button>
@@ -64,7 +64,8 @@
         <button class="button button_target_close popup__close-btn" type="button" aria-label="Отмена."></button>
         <form class="form" name="avatar" novalidate>
           <h2 class="form__title">Обновить аватар</h2>
-          <input class="form__input" id="sorce-input" type="url" name="sorce" placeholder="Ссылка на картинку" required>
+          <input class="form__input" id="avatar-input" type="url" name="sorce" placeholder="Ссылка на картинку"
+            required>
           <span class="form__input-error sorce-input-error"></span>
           <button class="button form__submit-btn" type="submit">Сохранить</button>
         </form>
