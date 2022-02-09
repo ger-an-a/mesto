@@ -1,40 +1,33 @@
 export class Api {
-  constructor({baseUrl, headers}) {
+  constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
 
-  putLike(cardId){return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-    method: 'PUT',
-    headers: this._headers
-  })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  deleteLike(cardId){return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-    method: 'DELETE',
-    headers: this._headers
-  })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+  putLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: this._headers
     })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then(this._checkResponse)
   }
 
-  postCard(title, sorce){
+  deleteLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then(this._checkResponse)
+  }
+
+  postCard(title, sorce) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -43,19 +36,11 @@ export class Api {
         link: sorce
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then(this._checkResponse)
   }
 
 
-  patchInfo(userName, activity){
+  patchInfo(userName, activity) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -64,18 +49,10 @@ export class Api {
         about: activity
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then(this._checkResponse)
   }
 
-  patchAvatar(src){
+  patchAvatar(src) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -83,61 +60,30 @@ export class Api {
         avatar: src
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then(this._checkResponse)
   }
 
-  deleteCard(cardId){return fetch(`${this._baseUrl}/cards/${cardId}`, {
-    method: 'DELETE',
-    headers: this._headers
-  })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers
     })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then(this._checkResponse)
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-    method: 'GET',
-    headers: this._headers
-  })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      method: 'GET',
+      headers: this._headers
     })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then(this._checkResponse)
   }
 
   getInitialInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-    method: 'GET',
-    headers: this._headers
+      method: 'GET',
+      headers: this._headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .then(this._checkResponse)
   }
 }

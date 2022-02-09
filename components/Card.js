@@ -1,5 +1,5 @@
 export class Card {
-  constructor({ name, link, likes, _id}, cardSelector, handleDeleteClick, handleCardClick, handleLikeClick) {
+  constructor({ name, link, likes, _id }, cardSelector, handleDeleteClick, handleCardClick, handleLikeClick) {
     this._title = name;
     this._link = link;
     this._alt = this._title;
@@ -26,32 +26,45 @@ export class Card {
     this._likeBtn.classList.toggle('card__like-btn_active');
   }
 
-  _putLike(api){
+  _putLike(api) {
     api.putLike(this._id)
-    .then(data =>{
-      this._sumLikes.textContent = data.likes.length;
-    })
+      .then(data => {
+        this._sumLikes.textContent = data.likes.length;
+        this._toggleLike();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  _deleteLike(api){
+  _deleteLike(api) {
     api.deleteLike(this._id)
-    .then(data =>{
-      this._sumLikes.textContent = data.likes.length;
-    })
+      .then(data => {
+        this._toggleLike();
+        this._sumLikes.textContent = data.likes.length;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  handleLike(api){
+  handleLike(api) {
     this._sumLikes.textContent = '...';
-    if(this._likeBtn.classList.contains('card__like-btn_active')){
+    if (this._likeBtn.classList.contains('card__like-btn_active')) {
       this._deleteLike(api);
     }
     else this._putLike(api);
-    this._toggleLike();
   }
 
   deleteCard(api) {
-    this._element.closest('.card').remove();
-    api.deleteCard(this._id);
+    api.deleteCard(this._id)
+      .then(() => {
+        this._element.closest('.card').remove();
+      })
+  }
+
+  returnId() {
+    return this._id;
   }
 
   generateCard(myId) {
@@ -63,7 +76,7 @@ export class Card {
     this._element.querySelector('.card__title').textContent = this._title;
     this._sumLikes.textContent = this._likes.length;
     this._likes.forEach(element => {
-      if(element._id == myId) {
+      if (element._id == myId) {
         this._toggleLike();
       }
     });

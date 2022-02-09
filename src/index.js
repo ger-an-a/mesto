@@ -23,8 +23,18 @@ const formAvatarValidation = new FormValidator(settings, formAvatar);
 const imgPopup = new PopupWithImage(popupSelectors.img);
 const delPopup = new PopupWithConfirm(popupSelectors.del, (evt) => {
   evt.preventDefault();
-  delPopup.delete(api);
-  delPopup.close();
+  delPopup.loading(true);
+  const idCard = delPopup.delete(api);
+  api.deleteCard(idCard)
+    .then(() => {
+      delPopup.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      delPopup.loading.bind(delPopup)(false);
+    })
 });
 
 formEditValidation.enableValidation();
@@ -42,11 +52,14 @@ Promise.all([api.getInitialCards(), api.getInitialInfo()])
       api.patchAvatar(avatarPopup.formValues.sorce)
         .then(data => {
           info.setAvatar(data.avatar);
+          avatarPopup.close.bind(avatarPopup)();
+          avatarPopup.reset.bind(avatarPopup)();
+        })
+        .catch((err) => {
+          console.log(err);
         })
         .finally(() => {
           avatarPopup.loading.bind(avatarPopup)(false);
-          avatarPopup.close.bind(avatarPopup)();
-          avatarPopup.reset.bind(avatarPopup)();
         })
     });
     const editPopup = new PopupWithForm(popupSelectors.edit, (evt) => {
@@ -56,10 +69,13 @@ Promise.all([api.getInitialCards(), api.getInitialInfo()])
       api.patchInfo(editPopup.formValues.userName, editPopup.formValues.activity)
         .then(data => {
           info.setUserInfo(data.name, data.about);
+          editPopup.close.bind(editPopup)();
+        })
+        .catch((err) => {
+          console.log(err);
         })
         .finally(() => {
           editPopup.loading.bind(editPopup)(false);
-          editPopup.close.bind(editPopup)();
         })
     });
     const addPopup = new PopupWithForm(popupSelectors.add, (evt) => {
@@ -71,11 +87,14 @@ Promise.all([api.getInitialCards(), api.getInitialInfo()])
           const cardElement = createCard(data, imgPopup, delPopup, myId, api);
           cardsList.addItem(cardElement);
           formAddValidation.hideErrors();
-        })
-        .finally(() => {
-          avatarPopup.loading.bind(addPopup)(false);
           addPopup.close.bind(addPopup)();
           addPopup.reset.bind(addPopup)();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          addPopup.loading.bind(addPopup)(false);
         })
     });
 
@@ -85,4 +104,7 @@ Promise.all([api.getInitialCards(), api.getInitialInfo()])
       editPopup.open.bind(editPopup)();
     });
     addBtn.addEventListener('click', addPopup.open.bind(addPopup));
-  });
+  })
+  .catch((err) => {
+    console.log(err);
+  })
