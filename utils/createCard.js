@@ -5,7 +5,6 @@ export function createCard(cardData, popupImg, popupDel, myId, api) {
   }, () => {
     popupImg.open(cardData);
   }, () => {
-    Promise.any([api.getInitialCards(), api.getInitialInfo()])
     card.handleLike(api);
   });
   const cardElement = card.generateCard(myId);

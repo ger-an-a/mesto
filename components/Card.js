@@ -61,6 +61,9 @@ export class Card {
       .then(() => {
         this._element.closest('.card').remove();
       })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   returnId() {
